@@ -79,8 +79,8 @@ public static class ApiExtensions
     // builder.Services.AddDbContext<UserDbContext>(opt =>
     //   opt.UseSqlServer(builder.Configuration.GetConnectionString("default"), b => b.MigrationsAssembly("TodoAppLogin.Api")).LogTo(Console.WriteLine, LogLevel.Information)
     // );
-    builder.Services.AddScoped<LoginCommandHandler>();
-    builder.Services.AddScoped<UserRepository>();
+    // builder.Services.AddScoped<LoginCommandHandler>();
+    // builder.Services.AddScoped<UserRepository>();
 
     builder.Services.AddControllers();
     builder.Services.AddMvc();
