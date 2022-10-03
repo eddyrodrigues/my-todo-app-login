@@ -1,0 +1,4 @@
+TodoAppLogin.Api/bin/Debug/net6.0/*
+*/bin/*
+*/obj/*
+*/Migrations/*
