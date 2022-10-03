@@ -24,7 +24,7 @@ public class LoginController : ControllerBase
   
   [AllowAnonymous]
   [HttpGet]
-  [Route("/check")]
+  [Route("check")]
   public IActionResult check()
   {
     return Ok(new
