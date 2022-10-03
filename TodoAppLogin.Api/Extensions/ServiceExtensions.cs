@@ -76,9 +76,9 @@ public static class ApiExtensions
   public static WebApplicationBuilder ApiConfiguration(this WebApplicationBuilder builder)
   {
     TokenService.JwtKey = builder.Configuration.GetValue<string>("JwtKey");
-    builder.Services.AddDbContext<UserDbContext>(opt =>
-      opt.UseSqlServer(builder.Configuration.GetConnectionString("default"), b => b.MigrationsAssembly("TodoAppLogin.Api")).LogTo(Console.WriteLine, LogLevel.Information)
-    );
+    // builder.Services.AddDbContext<UserDbContext>(opt =>
+    //   opt.UseSqlServer(builder.Configuration.GetConnectionString("default"), b => b.MigrationsAssembly("TodoAppLogin.Api")).LogTo(Console.WriteLine, LogLevel.Information)
+    // );
     builder.Services.AddScoped<LoginCommandHandler>();
     builder.Services.AddScoped<UserRepository>();
 

@@ -21,6 +21,19 @@ public class LoginController : ControllerBase
   {
     
   }
+  
+  [AllowAnonymous]
+  [HttpGet]
+  [Route("/check")]
+  public IActionResult check()
+  {
+    return Ok(new
+    {
+      name = "Eduardo Test",
+      connect = true
+    });
+  }
+
   [AllowAnonymous]
   [HttpPost]
   [Route("/Token")]
