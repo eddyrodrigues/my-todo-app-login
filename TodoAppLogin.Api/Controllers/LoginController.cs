@@ -10,30 +10,6 @@ namespace TodoAppLogin.Api.Controllers;
 
 public class LoginController : ControllerBase
 {
-
-  private readonly ILogger<LoginController> _logger;
-
-  // public LoginController(ILogger<LoginController> logger)
-  // {
-  //     _logger = logger;
-  // }
-  public LoginController()
-  {
-    
-  }
-  
-  [AllowAnonymous]
-  [HttpGet]
-  [Route("check")]
-  public IActionResult check()
-  {
-    return Ok(new
-    {
-      name = "Eduardo Test",
-      connect = true
-    });
-  }
-
   [AllowAnonymous]
   [HttpPost]
   [Route("/Token")]

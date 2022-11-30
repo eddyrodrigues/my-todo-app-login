@@ -19,7 +19,7 @@ public class UserRepository
   {
     return _context.User.Find(id) ?? new User();
   }
-  public User GetByEmail(string email, Expression<Func<User, User>> fields)
+  public User? GetByEmail(string email, Expression<Func<User, User>> fields)
   {
     var user =_context.User
       .AsNoTracking()

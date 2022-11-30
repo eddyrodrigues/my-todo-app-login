@@ -75,7 +75,7 @@ public static class ApiExtensions
 {
   public static WebApplicationBuilder ApiConfiguration(this WebApplicationBuilder builder)
   {
-    string? connectionString = "";
+    string? connectionString = null;
     if (builder.Environment.IsDevelopment())
     {
       TokenService.SetJwtKey(builder.Configuration.GetValue<string>("JwtKey"));
@@ -85,6 +85,11 @@ public static class ApiExtensions
     {
       TokenService.SetJwtKey(Environment.GetEnvironmentVariable("JwtKey", EnvironmentVariableTarget.User));
       connectionString = Environment.GetEnvironmentVariable("defaultDbConn", EnvironmentVariableTarget.User);
+    }
+
+    if (connectionString is null)
+    {
+      throw new ArgumentNullException(nameof(connectionString));
     }
 
     builder.Services.AddDbContext<UserDbContext>(opt =>

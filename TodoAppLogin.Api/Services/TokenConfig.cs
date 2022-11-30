@@ -8,8 +8,8 @@ using TodoAppLogin.Infra.Extensions;
 namespace TodoAppLogin.Api.Services;
 
 public static class TokenConfig{
-  public static string? JwtKey { get; set; }
-  
+  private static string JwtKey = string.Empty;
+
   public static string GenerateToken(User user)
   {
 
