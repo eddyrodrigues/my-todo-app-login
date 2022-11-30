@@ -8,8 +8,21 @@ using TodoAppLogin.Infra.Extensions;
 namespace TodoAppLogin.Web.Services;
 
 public static class TokenService {
-  public static string JwtKey { get; set; } = string.Empty;
+  private static string JwtKey { get; set; } = string.Empty;
 
+  /// <summary>
+  /// ArgumentNullException
+  /// </summary>
+  /// <param name="jwtTokenKeyEsperado"></param>
+  public static void SetJwtKey(string? jwtTokenKeyEsperado)
+  {
+    if (jwtTokenKeyEsperado is null)
+    {
+      throw new ArgumentNullException(nameof(jwtTokenKeyEsperado));
+    }
+    JwtKey = jwtTokenKeyEsperado;
+  }
+  public static string GetJwtKey => JwtKey;
   public static string GenerateToken(User user)
   {
 

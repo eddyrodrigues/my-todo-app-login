@@ -15,7 +15,7 @@ public class UserMap : IEntityTypeConfiguration<User>
     builder.Property(p => p.Id).HasColumnName("Id");
     builder.Property(p => p.Name).HasColumnName("Name").HasMaxLength(255).IsRequired();
     builder.Property(p => p.Email).HasColumnName("Email").HasMaxLength(255).IsRequired();
-    builder.Property(p => p.Password).HasColumnName("Password").HasMaxLength(255).IsRequired();
+    builder.Property(p => p.Password).HasColumnName("Senha").HasMaxLength(255).IsRequired();
     
     builder.Navigation(t => t.Roles).AutoInclude();
     

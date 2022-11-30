@@ -40,7 +40,7 @@ public static class SwaggerExtensions
                   }
               return first;
           });
-          c.SwaggerDoc("v1", new OpenApiInfo { Title = "apiagenda", Version = "v1" });
+          c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiLogin", Version = "v1" });
 
                       c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme() 
                       { 
@@ -75,16 +75,29 @@ public static class ApiExtensions
 {
   public static WebApplicationBuilder ApiConfiguration(this WebApplicationBuilder builder)
   {
-    TokenService.JwtKey = builder.Configuration.GetValue<string>("JwtKey");
-    // builder.Services.AddDbContext<UserDbContext>(opt =>
-    //   opt.UseSqlServer(builder.Configuration.GetConnectionString("default"), b => b.MigrationsAssembly("TodoAppLogin.Api")).LogTo(Console.WriteLine, LogLevel.Information)
-    // );
-    // builder.Services.AddScoped<LoginCommandHandler>();
-    // builder.Services.AddScoped<UserRepository>();
+    string? connectionString = "";
+    if (builder.Environment.IsDevelopment())
+    {
+      TokenService.SetJwtKey(builder.Configuration.GetValue<string>("JwtKey"));
+      connectionString = builder.Configuration.GetConnectionString("default");
+    }
+    else 
+    {
+      TokenService.SetJwtKey(Environment.GetEnvironmentVariable("JwtKey", EnvironmentVariableTarget.User));
+      connectionString = Environment.GetEnvironmentVariable("defaultDbConn", EnvironmentVariableTarget.User);
+    }
 
-    builder.Services.AddControllers();
-    builder.Services.AddMvc();
+    builder.Services.AddDbContext<UserDbContext>(opt =>
+      opt.UseSqlServer(connectionString, b => b.MigrationsAssembly("TodoAppLogin.Api")).LogTo(Console.WriteLine, LogLevel.Information)
+    );
     return builder;
+  }
+
+  public static WebApplicationBuilder iLoadDependencyInjection(this WebApplicationBuilder builder)
+  {
+      builder.Services.AddScoped<LoginCommandHandler>();
+      builder.Services.AddScoped<UserRepository>();
+      return builder;
   }
 }
 
@@ -104,7 +117,7 @@ public static class IdentityExtensions
           x.TokenValidationParameters = new TokenValidationParameters
           {
               ValidateIssuerSigningKey = true,
-              IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenService.JwtKey)),
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenService.GetJwtKey)),
               ValidateIssuer = false,
               ValidateAudience = false
           };

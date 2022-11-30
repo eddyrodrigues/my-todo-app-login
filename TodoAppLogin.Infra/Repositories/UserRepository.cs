@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using TodoAppLogin.Domain.Dto;
 using TodoAppLogin.Domain.Entities;
 using TodoAppLogin.Infra.Context;
 
@@ -13,15 +15,25 @@ public class UserRepository
     this._context = _context;
   }
 
-  public User GetById(Guid id)
+  public User GetById(int id)
   {
     return _context.User.Find(id) ?? new User();
   }
-
-  public User GetByEmail(string email)
+  public User GetByEmail(string email, Expression<Func<User, User>> fields)
   {
-    var user =_context.User.Where(u => u.Email == email).FirstOrDefault();
-    return user ?? new User();
+    var user =_context.User
+      .AsNoTracking()
+      .Where(u => u.Email == email)
+      .Select(fields)
+    .FirstOrDefault();
+
+    return user;
+  }
+
+  public User? GetByEmail(string email)
+  {
+    var user =_context.User.AsNoTracking().Where(u => u.Email == email).FirstOrDefault();
+    return user;
   }
   public User GetByEmailToGenerateToken(string email)
   {
