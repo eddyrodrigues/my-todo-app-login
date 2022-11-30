@@ -2,3 +2,6 @@ TodoAppLogin.Api/bin/Debug/net6.0/*
 */bin/*
 */obj/*
 */Migrations/*
+TodoAppLogin.Api/appsettings.json
+TodoAppLogin.Api/appsettings.Development.json
+.vs/*
